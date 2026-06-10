@@ -5,7 +5,7 @@ from wordcloud import WordCloud
 import matplotlib.pyplot as plt
 
 # =====================================================================
-# 1. CONFIGURACIÓN DE LA PÁGINA (Criterio 6: Empatía e Interfaz Intuitiva)
+# 1. CONFIGURACIÓN DE LA PÁGINA Y ESTILOS
 # =====================================================================
 st.set_page_config(
     page_title="Dashboard Académico - BERT & Facebook", 
@@ -13,25 +13,26 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Estilos CSS 
+# Estilos CSS avanzados para una interfaz limpia, moderna y profesional
 st.markdown("""
     <style>
     .main { background-color: #f8fafc; }
-    .stTitle { color: #0f172a; font-family: 'Arial'; font-weight: bold; }
+    .stTitle { color: #0f172a; font-family: 'Arial'; font-weight: bold; text-align: center; margin-bottom: 25px; }
     .metric-box { background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); text-align: center; border-top: 4px solid #0284c7; }
     .keyword-badge { background-color: #e0f2fe; color: #0369a1; padding: 6px 12px; border-radius: 20px; font-weight: bold; display: inline-block; margin: 5px; font-size: 13px; border: 1px solid #bae6fd; }
     .comentario-caja { background-color: #f1f5f9; padding: 15px; border-left: 5px solid #0284c7; border-radius: 4px; margin-bottom: 20px; color: #334155; font-size: 14px; }
+    .section-card { background-color: #ffffff; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); margin-bottom: 25px; border: 1px solid #e2e8f0; }
     </style>
     """, unsafe_allow_html=True)
 
 # =====================================================================
-# 2. IDENTIFICACIÓN Y PREGUNTA DE INVESTIGACIÓN 
+# 2. IDENTIFICACIÓN Y PREGUNTA DE INVESTIGACIÓN
 # =====================================================================
 st.title("¿De qué manera los modelos BERT permiten detectar noticias falsas publicadas en Facebook?")
-st.markdown("🔍 **Análisis Avanzado de Minería de Datos y Mapeo Científico**")
+st.markdown("<p style='text-align: center; color: #64748b; font-size: 16px;'><b>Análisis Avanzado de Minería de Datos y Mapeo Científico Basado en Scopus</b></p>", unsafe_allow_html=True)
 st.markdown("---")
 
-# Despliegue estético de los Keywords Clave solicitados
+# Despliegue estético de las palabras clave del estudio
 st.markdown("### 🏷️ Palabras Clave del Estudio (Keywords)")
 st.markdown("""
     <span class="keyword-badge">BERT</span>
@@ -42,13 +43,12 @@ st.markdown("""
 st.markdown("---")
 
 # =====================================================================
-# 3. CARGA DE DATOS 
+# 3. CARGA DE DATOS OPTIMIZADA
 # =====================================================================
 @st.cache_data
 def load_data():
     df = pd.read_csv("PA3_ML_scopus_limpio.csv")
     df = df.fillna("No registra")
-    # Limpieza de espacios en blanco en columnas clave para evitar errores
     if 'Country' in df.columns:
         df['Country'] = df['Country'].str.strip()
     return df
@@ -56,7 +56,7 @@ def load_data():
 df = load_data()
 
 # =====================================================================
-# 4. BARRA LATERAL: FILTROS E IDENTIFICACIÓN 
+# 4. BARRA LATERAL: FILTROS E IDENTIFICACIÓN
 # =====================================================================
 st.sidebar.header("🔍 Filtros Dinámicos")
 
@@ -70,14 +70,14 @@ selected_years = st.sidebar.slider(
 # Aplicar filtro dinámico al conjunto de datos
 df_filtered = df[(df['Year'] >= selected_years[0]) & (df['Year'] <= selected_years[1])]
 
-# Identificación Obligatoria del Alumno con tus datos asignados
+# Identificación del Alumno
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🎓 Datos del Alumno")
 st.sidebar.write("**Estudiante:** Grupo 2")
 st.sidebar.write("**Código:** 6817")
 
 # =====================================================================
-# 5. KPIs / SECCIÓN RESUMEN EJECUTIVO 
+# 5. KPIs / SECCIÓN RESUMEN EJECUTIVO
 # =====================================================================
 st.subheader("🚀 Indicadores Clave del Dataset")
 kpi1, kpi2, kpi3 = st.columns(3)
@@ -86,7 +86,6 @@ with kpi1:
     total_articulos = len(df_filtered)
     st.markdown(f'<div class="metric-box"><h3>{total_articulos} Artículos</h3><p style="color: #64748b;">Muestra de Literatura Científica</p></div>', unsafe_allow_html=True)
 with kpi2:
-    # Evitamos contar "Unknown" o vacíos para calcular el país líder real
     df_valid_countries = df_filtered[df_filtered['Country'] != "No registra"]
     pais_lider = df_valid_countries['Country'].value_counts().idxmax() if not df_valid_countries.empty else "No registra"
     st.markdown(f'<div class="metric-box"><h3>{pais_lider}</h3><p style="color: #64748b;">País con Mayor Producción</p></div>', unsafe_allow_html=True)
@@ -97,14 +96,72 @@ with kpi3:
 st.markdown("---")
 
 # =====================================================================
-# 6. NUEVA SECCIÓN: HALLAZGOS TÉCNICOS EXTRAÍDOS DE LOS ABSTRACTS REALES
+# 6. RESUMEN CONSOLIDADO DEL ANÁLISIS CIENTÍFICO (NUEVA SECCIÓN COMPLEMENTARIA)
 # =====================================================================
-st.subheader("📊 Mapeo de Evidencia Científica (Datos Extraídos de Abstracts)")
+st.subheader("📝 Resumen Consolidado del Análisis del Dataset Scopus")
+st.markdown("Análisis detallados sobre las metodologías, enfoques independientes y variables clave de la literatura recolectada:")
+
+pestana1, pestana2, pestana3, pestana4 = st.tabs([
+    "🤖 Modelos de IA", 
+    "📄 Estructura de Documentos", 
+    "🏢 Ecosistema de Editores", 
+    "🌐 Variables Geográficas e Idioma"
+])
+
+with pestana1:
+    st.markdown("""
+    **Análisis de Modelos de Inteligencia Artificial Más Utilizados**
+    El análisis de títulos, resúmenes y palabras clave para la mención de modelos de IA revela lo siguiente:
+    * **BERT** emerge como el modelo más prominente, siendo mencionado en **37** artículos, lo que subraya su importancia central en la investigación contenida en tu dataset, especialmente en el contexto de la detección de noticias falsas.
+    * **LSTM** le sigue con **12** menciones, y **CNN** con **10** menciones, indicando que las arquitecturas de redes neuronales profundas siguen siendo fundamentales, a menudo en combinación con BERT o como enfoques independientes.
+    * Otros modelos como **SVM (7)**, **RNN (5)** y **Random Forest (5)** también están presentes, aunque con menor frecuencia, lo que podría sugerir su uso en contextos más específicos o como líneas base de comparación.
+    * Variantes como **RoBERTa (4)** también aparecen, mientras que **DistilBERT (0)** y **XGBoost (0)** tienen una presencia muy limitada o nula en este dataset.
+    
+    *Conclusión:* La preeminencia de BERT destaca su influencia y la tendencia actual en el procesamiento del lenguaje natural para la detección de noticias falsas, a menudo en sinergia con arquitecturas de aprendizaje profundo clásicas.
+    """)
+
+with pestana2:
+    st.markdown("""
+    **Distribución de Publicaciones por Tipo de Documento**
+    La mayoría de las publicaciones en el dataset se concentran en formatos académicos clave, mostrando una clara preferencia por la difusión en foros peer-reviewed:
+    * **Conference paper:** Con **20** publicaciones, es el tipo de documento más frecuente, lo cual es indicativo de campos de rápida evolución donde las conferencias son vitales para la difusión temprana de resultados.
+    * **Article:** Con **15** publicaciones, los artículos de revista representan el segundo formato más común, asegurando una revisión más exhaustiva y una consolidación de la investigación.
+    * **Book chapter:** Con **2** publicaciones, los capítulos de libro tienen una representación menor, lo que puede indicar una síntesis o compilación de conocimientos en áreas específicas.
+    
+    *Conclusión:* El dataset está fuertemente inclinado hacia las publicaciones de conferencias y artículos de revistas, reflejando las vías principales de difusión de la investigación en este dominio.
+    """)
+
+with pestana3:
+    st.markdown("""
+    **Top Editores por Número de Publicaciones**
+    Los líderes en la publicación de investigaciones en la detección de noticias falsas y modelos de IA son:
+    * **Institute of Electrical and Electronics Engineers (IEEE):** 14 publicaciones (editor más dominante).
+    * **Springer Science and Business Media Deutschland GmbH:** 6 publicaciones.
+    * **Springer:** 4 publicaciones.
+    * **World Scientific Publishing Co. / ACM (Association for Computing Machinery):** 2 publicaciones cada uno.
+    * *Otros de la muestra:* Inderscience Publishers (1), CEUR-WS (1), Incoma Ltd (1), Elsevier Ltd (1), IOS Press (1).
+    
+    *Conclusión:* Muestra una concentración de publicaciones en instituciones académicas y editoriales de prestigio, lo que subraya la calidad y el alcance de la investigación en el dataset.
+    """)
+
+with pestana4:
+    st.markdown("""
+    **Análisis Lingüístico, Médico y Correspondencia**
+    * **Distribución por Idioma:** **English** es el idioma predominante con la vasta mayoría de los artículos (**37** publicaciones), consolidándose como la lingua franca de este dominio científico para facilitar el acceso a una audiencia internacional.
+    * **Análisis de 'PubMed ID':** Se encontraron **0** PubMed IDs únicos. Esto sugiere que los artículos de la colección no están vinculados al ámbito biomédico o de salud pública directo.
+    * **Análisis de 'Correspondence Address':** Se identificaron **35** Direcciones de Correspondencia únicas, evidenciando una notable diversidad de afiliaciones institucionales y dispersión geográfica de los autores principales.
+    """)
+
+st.markdown("---")
+
+# =====================================================================
+# 7. MAPEO DE EVIDENCIA CIENTÍFICA (ABSTRACTS RELES)
+# =====================================================================
+st.subheader("📊 Evidencia Científica Extraída de los Abstracts")
 col_abs1, col_abs2 = st.columns(2)
 
 with col_abs1:
     st.write("**Eficacia Comparativa de Algoritmos en la Detección de Fake News**")
-    # Datos de precisión explícitos de la muestra enviada
     modelos_data = {
         'Algoritmo / Arquitectura': ['SVM + TF-IDF (Máximo)', 'BERT (COVID-19 Dataset)', 'BERT + Bi-GRU (FNID)', 'Passive-Aggressive', 'Linear SVM', 'BERT + Bi-GRU (FNFD)', 'CNN / LSTM Baseline'],
         'Precisión Máxima (%)': [99.6, 98.41, 97.0, 94.0, 92.0, 91.0, 90.0]
@@ -120,7 +177,6 @@ with col_abs1:
 
 with col_abs2:
     st.write("**Ejes de Propagación de Desinformación y Modelos Multilingües**")
-    # Contextos de crisis y variantes lingüísticas analizadas en los artículos
     crisis_data = {
         'Contexto Temático': ['Pandemia COVID-19 / Infodemia', 'Campañas Electorales y Política', 'Grupos Médicos y de Salud', 'Crisis Migratorias / Minorías', 'Multimodalidad (Memes + Texto)'],
         'Artículos Críticos': [14, 9, 6, 5, 3]
@@ -136,13 +192,13 @@ with col_abs2:
 st.markdown("---")
 
 # =====================================================================
-# 7. VISUALIZACIONES DINÁMICAS ORIGINALES 
+# 8. VISUALIZACIONES DINÁMICAS ORIGINALES DEL DATASET
 # =====================================================================
 st.subheader("📈 Métricas Estructuradas del Repositorio")
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("Distribución de Publicaciones por Año")
+    st.write("**Distribución de Publicaciones por Año**")
     df_years = df_filtered.groupby('Year').size().reset_index(name='Cantidad de Artículos')
     fig_line = px.line(
         df_years, x='Year', y='Cantidad de Artículos', 
@@ -153,7 +209,7 @@ with col1:
     st.plotly_chart(fig_line, use_container_width=True)
 
 with col2:
-    st.subheader("Autores Más Citados en la Temática")
+    st.write("**Autores Más Citados en la Temática**")
     if 'Cited by' in df_filtered.columns and 'Authors' in df_filtered.columns:
         top_authors = df_filtered.sort_values(by='Cited by', ascending=False).head(8)
         fig_author = px.bar(
@@ -168,57 +224,63 @@ with col2:
         st.warning("La columna 'Authors' o 'Cited by' no está disponible.")
 
 # =====================================================================
-# 8. NUBE DE PALABRAS EN ABSTRACTS 
+# 9. NUBE DE PALABRAS EN ABSTRACTS
 # =====================================================================
 st.markdown("---")
 st.subheader("☁️ Análisis Semántico de Palabras en Abstracts")
 st.markdown("Este mapa visual identifica los términos más recurrentes en los resúmenes científicos, revelando las metodologías y enfoques dominantes:")
 
-# Verificamos si existe la columna Abstract o usamos Author Keywords de respaldo
 columna_texto = 'Abstract' if 'Abstract' in df.columns else 'Author Keywords'
 text_abstracts = " ".join(df_filtered[columna_texto].astype(str))
-
-# Lista de palabras vacías comunes en inglés para limpiar la nube
 stop_words = ["the", "and", "a", "of", "to", "in", "is", "that", "for", "on", "with", "as", "by", "an", "it", "this", "from", "this", "No registra"]
 
 if text_abstracts.strip() and len(text_abstracts) > 100:
     wordcloud = WordCloud(
-        width=1100, height=350, 
+        width=1100, height=300, 
         background_color='white', 
         colormap='Blues',
         stopwords=set(stop_words)
     ).generate(text_abstracts)
     
-    fig_wc, ax = plt.subplots(figsize=(11, 3.5))
+    fig_wc, ax = plt.subplots(figsize=(11, 3))
     ax.imshow(wordcloud, interpolation='bilinear')
     ax.axis('off')
     st.pyplot(fig_wc)
 else:
-    st.info("Agrega la columna 'Abstract' en tu archivo CSV para procesar el análisis lingüístico avanzado requerido.")
+    st.info("Agrega la columna 'Abstract' en tu archivo CSV para procesar el análisis lingüístico avanzado.")
 
 # =====================================================================
-# 9. SECCIÓN DE IMÁGENES DE COLAB
+# 10. SECCIÓN INTEGRAL DE IMÁGENES REQUERIDAS (GRAFICOS 1, 2, 3 Y 4)
 # =====================================================================
 st.markdown("---")
-st.subheader("🖼️ Análisis Exploratorio Avanzado (Resultados de Google Colab)")
-st.markdown("Métricas experimentales obtenidas durante el entrenamiento y evaluación de los modelos:")
+st.subheader("🖼️ Análisis Exploratorio Avanzado e Interpretación Gráfica (Resultados Externos)")
+st.markdown("Resultados experimentales y de distribución obtenidos durante las etapas de minería de datos:")
 
-# Comentarios asignados perfectamente sin saltos de línea (Cero SyntaxError)
-comentario_grafico_1 = "Este gráfico de barras logarítmico resume las métricas clave del dataset de Scopus, permitiendo una comparación rápida de valores muy diferentes."
-comentario_grafico_2 = "Este gráfico de líneas muestra la evolución de los temas de investigación a lo largo del tiempo, revelando que 'BERT' es un tema central y dominante en las publicaciones, mostrando una presencia constante y en crecimiento, o un pico significativo que lo posiciona como un área de gran interés."
+# Definición ordenada de los comentarios asignados
+comentario_g1 = "Este gráfico de barras logarítmico resume las métricas clave del dataset de Scopus, permitiendo una comparación rápida de valores muy diferentes."
+comentario_g2 = "Este gráfico de líneas muestra la evolución de los temas de investigación a lo largo del tiempo, revelando que 'BERT' es un tema central y dominante en las publicaciones, mostrando una presencia constante y en crecimiento, o un pico significativo que lo posiciona como un área de gran interés."
+comentario_g3 = "Este gráfico de barras visualiza las 10 revistas y conferencias que han publicado artículos relacionados con la detección de noticias falsas utilizando BERT."
+comentario_g4 = "Basándonos en la tabla de frecuencia y el gráfico de barras, podemos identificar los países que tienen una mayor representación en tu en el ámbito de la detección de noticias falsas."
 
-col_img1, col_img2 = st.columns(2)
-
-with col_img1:
+# Despliegue en cuadrícula estética (2 columnas x 2 filas)
+bloque1_col1, bloque1_col2 = st.columns(2)
+with bloque1_col1:
     st.image("grafico1.jpg", caption="Gráfico 1: Rendimiento General de Métricas", use_container_width=True)
-    st.markdown(f'<div class="comentario-caja">{comentario_grafico_1}</div>', unsafe_allow_html=True)
-
-with col_img2:
+    st.markdown(f'<div class="comentario-caja">{comentario_g1}</div>', unsafe_allow_html=True)
+with bloque1_col2:
     st.image("grafico2.png", caption="Gráfico 2: Evolución Temática en el Tiempo", use_container_width=True)
-    st.markdown(f'<div class="comentario-caja">{comentario_grafico_2}</div>', unsafe_allow_html=True)
+    st.markdown(f'<div class="comentario-caja">{comentario_g2}</div>', unsafe_allow_html=True)
+
+bloque2_col1, bloque2_col2 = st.columns(2)
+with bloque2_col1:
+    st.image("grafico3.png", caption="Gráfico 3: Top Fuentes de Publicación", use_container_width=True)
+    st.markdown(f'<div class="comentario-caja">{comentario_g3}</div>', unsafe_allow_html=True)
+with bloque2_col2:
+    st.image("grafico4.png", caption="Gráfico 4: Análisis de Densidad Geográfica", use_container_width=True)
+    st.markdown(f'<div class="comentario-caja">{comentario_g4}</div>', unsafe_allow_html=True)
 
 # =====================================================================
-# 10. VISUALIZACIÓN DE LA TABLA DE DATOS 
+# 11. VISUALIZACIÓN DE LA TABLA DE DATOS
 # =====================================================================
 st.markdown("---")
 with st.expander("📂 Desplegar Registro de Literatura Científica (Muestra de Scopus)"):
@@ -228,7 +290,7 @@ with st.expander("📂 Desplegar Registro de Literatura Científica (Muestra de 
     )
 
 # =====================================================================
-# 11. ASIGNACIÓN DE LICENCIA OBLIGATORIA
+# 12. ASIGNACIÓN DE LICENCIA DE DISTRIBUCIÓN
 # =====================================================================
 st.markdown("---")
 st.markdown("""
