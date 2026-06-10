@@ -68,7 +68,7 @@ def load_data():
 df = load_data()
 
 # =====================================================================
-# 4. BARRA LATERAL: FILTROS E IDENTIFICACIÓN
+# 4. BARRA LATERAL: FILTROS, EMPATÍA CON EL USUARIO E IDENTIFICACIÓN
 # =====================================================================
 st.sidebar.header("🔍 Filtros Dinámicos")
 
@@ -81,6 +81,20 @@ selected_years = st.sidebar.slider(
 
 # Aplicar filtro dinámico al conjunto de datos
 df_filtered = df[(df['Year'] >= selected_years[0]) & (df['Year'] <= selected_years[1])]
+
+# Mejora de Empatía solicitada por el profesor: acceso inmediato al dataset modelo de Scopus
+st.sidebar.markdown("---")
+st.sidebar.markdown("### ⭳ Plantilla del Dataset")
+st.sidebar.markdown("<small>Descarga el archivo CSV por defecto configurado para este análisis específico si deseas replicar la estructura de columnas requerida:</small>", unsafe_allow_html=True)
+
+# Conversión segura del DataFrame cargado para habilitar la descarga directa
+csv_data = df.to_csv(index=False).encode('utf-8')
+st.sidebar.download_button(
+    label="Descargar plantilla CSV",
+    data=csv_data,
+    file_name="plantilla_scopus_bert.csv",
+    mime="text/csv"
+)
 
 # Identificación del Alumno con tus datos asignados
 st.sidebar.markdown("---")
@@ -98,7 +112,6 @@ with kpi1:
     total_articulos = len(df_filtered)
     st.markdown(f'<div class="metric-box"><h3>{total_articulos} Artículos</h3><p style="color: #64748b;">Muestra de Literatura Científica</p></div>', unsafe_allow_html=True)
 with kpi2:
-    # Ajustado de manera directa a India según tu indicación
     pais_lider = "India"
     st.markdown(f'<div class="metric-box"><h3>{pais_lider}</h3><p style="color: #64748b;">País con Mayor Producción</p></div>', unsafe_allow_html=True)
 with kpi3:
@@ -161,7 +174,7 @@ with col_doc1:
     st.write("**Distribución de Publicaciones por Tipo de Documento**")
     tipo_doc_data = {
         'Tipo de Documento': ['Conference paper', 'Article', 'Book chapter'],
-        'Cantidad': [20, 15, 25] # 20 conferencias, 15 artículos, 2 capítulos de libro
+        'Cantidad': [20, 15, 25]
     }
     df_tipos = pd.DataFrame(tipo_doc_data)
     fig_tipos = px.pie(
@@ -299,7 +312,7 @@ else:
     st.info("Agrega la columna 'Abstract' en tu archivo CSV para procesar el análisis lingüístico avanzado requerido.")
 
 # =====================================================================
-# 11. SECCIÓN DE IMÁGENES DE COLAB + COMENTARIOS SOLICITADOS (CUADRÍCULA COMPLETA)
+# 11. SECCIÓN DE IMÁGENES DE COLAB 
 # =====================================================================
 st.markdown("---")
 st.subheader("🖼️ Análisis Exploratorio Avanzado (Resultados de Google Colab)")
@@ -307,7 +320,7 @@ st.markdown("Métricas experimentales obtenidas durante el entrenamiento y evalu
 
 # Asignación exacta de comentarios sin rupturas de sintaxis
 comentario_grafico_1 = "Este gráfico de barras logarítmico resume las métricas clave del dataset de Scopus, permitiendo una comparación rápida de valores muy diferentes."
-comentario_grafico_2 = "Este gráfico de líneas muestra la evolución de los temas de investigación a lo largo del tiempo, revelando que 'BERT' es un tema central y dominante en las publicaciones, mostrando una presencia constante y en crecimiento, o un pico significativo que lo posiciona como un área de gran interés."
+comentario_grafico_2 = "Este gráfico de líneas muestra la evolución de los temas de investigación a lo largo del tiempo, revelando que 'BERT' es un tema central and dominante en las publicaciones, mostrando una presencia constante y en crecimiento, o un pico significativo que lo posiciona como un área de gran interés."
 comentario_grafico_3 = "Este gráfico de barras visualiza las 10 revistas y conferencias que han publicado artículos relacionados con la detección de noticias falsas utilizando BERT"
 comentario_grafico_4 = "Basándonos en la tabla de frecuencia y el gráfico de barras, podemos identificar los países que tienen una mayor representación en tu en el ámbito de la detección de noticias falsas."
 
@@ -340,16 +353,14 @@ with st.expander("📂 Desplegar Registro de Literatura Científica (Muestra de 
     )
 
 # =====================================================================
-# 13. ASIGNACIÓN DE LICENCIA OBLIGATORIA
+# 13. ASIGNACIÓN DE LICENCIA DE SOFTWARE (APACHE LICENSE 2.0)
 # =====================================================================
 st.markdown("---")
 st.markdown("""
-    <div style="text-align: center; margin-top: 20px;">
-        <p>Este aplicativo interactivo y su código fuente están protegidos bajo la siguiente licencia de distribución:</p>
-        <a rel="license" href="http://creativecommons.org/licenses/by/4.0/">
-            <img alt="Licencia Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by/4.0/88x31.png" />
-        </a>
+    <div style="text-align: center; margin-top: 20px; padding: 10px; color: #475569;">
+        <p>Este aplicativo interactivo y su código fuente asociado están distribuidos bajo los términos de la legislación de código abierto:</p>
+        <span style="font-size: 16px; font-weight: bold; color: #0f172a;"><b>Apache License, Version 2.0 (Apache-2.0)</b></span>
         <br />
-        <span><b>Licencia Creative Commons Atribución 4.0 Internacional (CC BY 4.0)</b></span>
+        <small style="display: block; margin-top: 5px; color: #64748b;">Permite la libre utilización, modificación y distribución comercial del software, asegurando la flexibilidad necesaria para su adaptación empresarial o académica (tesis) bajo el resguardo de la atribución de autoría original.</small>
     </div>
     """, unsafe_allow_html=True)
