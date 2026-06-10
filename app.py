@@ -100,6 +100,12 @@ st.sidebar.download_button(
 st.sidebar.markdown("---")
 st.sidebar.markdown("### 🎓 Datos del Alumno")
 st.sidebar.write("**Estudiante:** Grupo 2")
+st.sidebar.markdown("""
+* Chancafe Pisfil Liz
+* Alzamora Graciela
+* Marquez Marcelo
+* Retamozo Sheila
+""")
 st.sidebar.write("**Código:** 6817")
 
 # =====================================================================
