@@ -145,7 +145,7 @@ with col_abs2:
 
 st.markdown("""
 <div class="comentario-caja">
-<b>Breve Explicación:</b> BERT emerge como el modelo más prominente con 37 menciones, subrayando su importancia central en el procesamiento de lenguaje natural para la detección de noticias falsas. Le siguen arquitecturas profundas como LSTM (12) y CNN (10), indicando que las redes complejas dominan de forma independiente o combinada frente a líneas base tradicionales como SVM o Random Forest.
+BERT emerge como el modelo más prominente con 37 menciones, subrayando su importancia central en el procesamiento de lenguaje natural para la detección de noticias falsas. Le siguen arquitecturas profundas como LSTM (12) y CNN (10), indicando que las redes complejas dominan de forma independiente o combinada frente a líneas base tradicionales como SVM o Random Forest.
 </div>
 """, unsafe_allow_html=True)
 
@@ -188,7 +188,7 @@ with col_doc2:
 
 st.markdown("""
 <div class="comentario-caja">
-<b>Breve Explicación:</b> La mayoría de publicaciones se concentran en Conference Papers (20) y Articles (15), reflejando un campo de rápida evolución científica. El ecosistema está fuertemente dominado por el Institute of Electrical and Electronics Engineers (IEEE) con 14 publicaciones y el grupo Springer, consolidando la legitimidad y alto estándar técnico del repositorio.
+La mayoría de publicaciones se concentran en Conference Papers (20) y Articles (15), reflejando un campo de rápida evolución científica. El ecosistema está fuertemente dominado por el Institute of Electrical and Electronics Engineers (IEEE) con 14 publicaciones y el grupo Springer, consolidando la legitimidad y alto estándar técnico del repositorio.
 </div>
 """, unsafe_allow_html=True)
 
@@ -231,7 +231,7 @@ with col_geo2:
 
 st.markdown("""
 <div class="comentario-caja">
-<b>Breve Explicación:</b> La desinformación ligada a la pandemia de COVID-19 e infodemia lidera los entornos temáticos de evaluación con 14 artículos científicos. El inglés se ratifica como la lingua franca absoluta con 37 publicaciones, mientras que el hallazgo de 0 PubMed IDs confirma que los alcances de la investigación están orientados a las ciencias de la computación e ingeniería, ajenos al sector clínico directo.
+La desinformación ligada a la pandemia de COVID-19 e infodemia lidera los entornos temáticos de evaluación con 14 artículos científicos. El inglés se ratifica como la lingua franca absoluta con 37 publicaciones, mientras que el hallazgo de 0 PubMed IDs confirma que los alcances de la investigación están orientados a las ciencias de la computación e ingeniería, ajenos al sector clínico directo.
 </div>
 """, unsafe_allow_html=True)
 
