@@ -114,25 +114,9 @@ st.markdown("---")
 st.subheader("🖼️ Análisis Exploratorio Avanzado (Resultados de Google Colab)")
 st.markdown("A continuación, se presentan las métricas de rendimiento extraídas del entorno experimental:")
 
-# ✍️ REEMPLAZA LOS TEXTOS ENTRE COMILLAS CON TUS COMENTARIOS REALES:
-comentario_grafico_1 = "Este gráfico de barras logarítmico resume las métricas clave del dataset de Scopus, permitiendo una comparación rápida de valores muy diferentes.
-
-Dominio de Citas: Las 'Total Citas' (636) y 'Total Autores' (134) son las métricas con valores más altos, lo que sugiere un impacto colectivo considerable y una amplia participación autoral en el dataset, a pesar de que el número total de artículos es de 37.
-Producción Anual Clave: El año 2022 es claramente el más prolífico con 12 artículos publicados, destacando como un período de alta actividad en el dataset. Este pico es un punto importante para futuros análisis de tendencias específicas de ese año.
-En resumen, el dataset refleja una comunidad de investigación activa con un impacto considerable en términos de citas, concentrando su mayor producción en el año 2022."
-comentario_grafico_2 = " 
-Este gráfico de líneas muestra la evolución de los temas de investigación a lo largo del tiempo, revelando:
-
-Dominio de BERT: Se observa que 'BERT' es un tema central y dominante en las publicaciones, mostrando una presencia constante y en crecimiento, o un pico significativo que lo posiciona como un área de gran interés.
-
-Tendencias Clave: Identifica el crecimiento, picos de interés o disminución en la producción de artículos por cada palabra clave. Podemos ver cómo otros temas se desarrollan en relación con el auge de 'BERT'.
-
-Conexiones entre Temas: La cercanía o cruce de líneas puede sugerir áreas de investigación relacionadas o el uso de técnicas similares, especialmente en combinación con 'BERT' (e.g., 'Fake news detection', 'Machine learning').
-
-Estabilidad o Declive: Se puede observar si campos de investigación mantienen una producción constante o si su interés está disminuyendo, permitiendo comparar la estabilidad de 'BERT' frente a otros temas.
-
-Conclusión: Este análisis directo de las tendencias por tema es crucial para entender la dinámica del conocimiento en el dataset. La prevalencia y trayectoria de 'BERT' resaltan su impacto significativo en el campo de estudio, mientras que la evolución de otros temas muestra la diversidad y las interconexiones dentro de la investigación.
-"
+# COMENTARIOS :
+comentario_grafico_1 = "Este gráfico de barras logarítmico resume las métricas clave del dataset de Scopus, permitiendo una comparación rápida de valores muy diferentes."
+comentario_grafico_2 = " Este gráfico de líneas muestra la evolución de los temas de investigación a lo largo del tiempo, revelando que 'BERT' es un tema central y dominante en las publicaciones, mostrando una presencia constante y en crecimiento, o un pico significativo que lo posiciona como un área de gran interés."
 
 # Creamos dos columnas adicionales para poner tus fotos lado a lado
 col_img1, col_img2 = st.columns(2)
