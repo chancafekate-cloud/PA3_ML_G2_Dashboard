@@ -98,11 +98,8 @@ with kpi1:
     total_articulos = len(df_filtered)
     st.markdown(f'<div class="metric-box"><h3>{total_articulos} Artículos</h3><p style="color: #64748b;">Muestra de Literatura Científica</p></div>', unsafe_allow_html=True)
 with kpi2:
-    if 'Country' in df_filtered.columns:
-        df_valid_countries = df_filtered[df_filtered['Country'] != "No registra"]
-        pais_lider = df_valid_countries['Country'].value_counts().idxmax() if not df_valid_countries.empty else "No registra"
-    else:
-        pais_lider = "No registra"
+    # Ajustado de manera directa a India según tu indicación
+    pais_lider = "India"
     st.markdown(f'<div class="metric-box"><h3>{pais_lider}</h3><p style="color: #64748b;">País con Mayor Producción</p></div>', unsafe_allow_html=True)
 with kpi3:
     citas_totales = int(df_filtered['Cited by'].sum()) if 'Cited by' in df_filtered.columns else 0
@@ -111,14 +108,13 @@ with kpi3:
 st.markdown("---")
 
 # =====================================================================
-# 6. NUEVA SECCIÓN: HALLAZGOS TÉCNICOS EXTRAÍDOS DE LOS ABSTRACTS REALES
+# 6. ANÁLISIS DE MODELOS DE INTELIGENCIA ARTIFICIAL Y ARQUITECTURAS COMPARATIVAS
 # =====================================================================
-st.subheader("📊 Mapeo de Evidencia Científica (Datos Extraídos de Abstracts)")
+st.subheader("🤖 Análisis de Modelos de Inteligencia Artificial Más Utilizados")
 col_abs1, col_abs2 = st.columns(2)
 
 with col_abs1:
     st.write("**Eficacia Comparativa de Algoritmos en la Detección de Fake News**")
-    # Datos de precisión explícitos de la muestra enviada
     modelos_data = {
         'Algoritmo / Arquitectura': ['SVM + TF-IDF (Máximo)', 'BERT (COVID-19 Dataset)', 'BERT + Bi-GRU (FNID)', 'Passive-Aggressive', 'Linear SVM', 'BERT + Bi-GRU (FNFD)', 'CNN / LSTM Baseline'],
         'Precisión Máxima (%)': [99.6, 98.41, 97.0, 94.0, 92.0, 91.0, 90.0]
@@ -133,8 +129,79 @@ with col_abs1:
     st.plotly_chart(fig_models, use_container_width=True)
 
 with col_abs2:
+    st.write("**Presencia y Menciones de Modelos de IA en el Dataset**")
+    menciones_ia = {
+        'Modelo / Variante': ['BERT', 'LSTM', 'CNN', 'SVM', 'RNN', 'Random Forest', 'RoBERTa', 'DistilBERT', 'XGBoost'],
+        'Menciones': [37, 12, 10, 7, 5, 5, 4, 0, 0]
+    }
+    df_menciones = pd.DataFrame(menciones_ia)
+    fig_menciones = px.bar(
+        df_menciones, x='Modelo / Variante', y='Menciones',
+        title="Frecuencia de Modelos Identificados en Títulos y Resúmenes",
+        color='Menciones', color_continuous_scale="Blues"
+    )
+    fig_menciones.update_layout(template="plotly_white")
+    st.plotly_chart(fig_menciones, use_container_width=True)
+
+st.markdown("""
+<div class="comentario-caja">
+<b>Breve Explicación:</b> BERT emerge como el modelo más prominente con 37 menciones, subrayando su importancia central en el procesamiento de lenguaje natural para la detección de noticias falsas. Le siguen arquitecturas profundas como LSTM (12) y CNN (10), indicando que las redes complejas dominan de forma independiente o combinada frente a líneas base tradicionales como SVM o Random Forest.
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("---")
+
+# =====================================================================
+# 7. ESTRUCTURA DE DOCUMENTOS Y ECOSISTEMA DE EDITORES
+# =====================================================================
+st.subheader("📄 Distribución de Formatos Académicos y Ecosistema Editorial")
+col_doc1, col_doc2 = st.columns(2)
+
+with col_doc1:
+    st.write("**Distribución de Publicaciones por Tipo de Documento**")
+    tipo_doc_data = {
+        'Tipo de Documento': ['Conference paper', 'Article', 'Book chapter'],
+        'Cantidad': [20, 15, 25] # 20 conferencias, 15 artículos, 2 capítulos de libro
+    }
+    df_tipos = pd.DataFrame(tipo_doc_data)
+    fig_tipos = px.pie(
+        df_tipos, values='Cantidad', names='Tipo de Documento',
+        title="Preferencia de Difusión en Foros Peer-Reviewed",
+        color_discrete_sequence=px.colors.sequential.Blues_r
+    )
+    st.plotly_chart(fig_tipos, use_container_width=True)
+
+with col_doc2:
+    st.write("**Top Editores por Número de Publicaciones**")
+    editores_data = {
+        'Editor': ['IEEE', 'Springer Deutschland', 'Springer', 'World Scientific', 'ACM', 'Inderscience', 'CEUR-WS', 'Incoma Ltd', 'Elsevier Ltd', 'IOS Press'],
+        'Publicaciones': [14, 6, 4, 2, 2, 1, 1, 1, 1, 1]
+    }
+    df_editores = pd.DataFrame(editores_data)
+    fig_editores = px.bar(
+        df_editores, x='Publicaciones', y='Editor',
+        orientation='h', title="Top Editores en la Literatura Analizada",
+        color='Publicaciones', color_continuous_scale="Blues"
+    )
+    fig_editores.update_layout(yaxis={'categoryorder':'total ascending'}, template="plotly_white")
+    st.plotly_chart(fig_editores, use_container_width=True)
+
+st.markdown("""
+<div class="comentario-caja">
+<b>Breve Explicación:</b> La mayoría de publicaciones se concentran en Conference Papers (20) y Articles (15), reflejando un campo de rápida evolución científica. El ecosistema está fuertemente dominado por el Institute of Electrical and Electronics Engineers (IEEE) con 14 publicaciones y el grupo Springer, consolidando la legitimidad y alto estándar técnico del repositorio.
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown("---")
+
+# =====================================================================
+# 8. VARIABLES GEOGRÁFICAS, IDIOMAS Y CONTEXTOS TEMÁTICOS
+# =====================================================================
+st.subheader("🌐 Variables Demográficas, Idioma y Entornos de Desinformación")
+col_geo1, col_geo2 = st.columns(2)
+
+with col_geo1:
     st.write("**Ejes de Propagación de Desinformación y Modelos Multilingües**")
-    # Contextos de crisis y variantes lingüísticas analizadas en los artículos
     crisis_data = {
         'Contexto Temático': ['Pandemia COVID-19 / Infodemia', 'Campañas Electorales y Política', 'Grupos Médicos y de Salud', 'Crisis Migratorias / Minorías', 'Multimodalidad (Memes + Texto)'],
         'Artículos Críticos': [14, 9, 6, 5, 3]
@@ -147,80 +214,33 @@ with col_abs2:
     )
     st.plotly_chart(fig_crisis, use_container_width=True)
 
-st.markdown("---")
+with col_geo2:
+    st.write("**Análisis de Identificadores Adicionales**")
+    identificadores_data = {
+        'Métrica Evaluada': ['Artículos en Inglés', 'Direcciones Correspondencia Únicas', 'PubMed IDs Únicos'],
+        'Valor Registrado': [37, 35, 0]
+    }
+    df_ids = pd.DataFrame(identificadores_data)
+    fig_ids = px.bar(
+        df_ids, x='Métrica Evaluada', y='Valor Registrado',
+        title="Distribución Lingüística e Identificadores Biométricos",
+        color='Valor Registrado', color_continuous_scale="Blues"
+    )
+    fig_ids.update_layout(template="plotly_white")
+    st.plotly_chart(fig_ids, use_container_width=True)
 
-# =====================================================================
-# 7. SECCIÓN COMPLEMENTARIA: RESUMEN CONSOLIDADO DEL ANÁLISIS DE SCOPUS
-# =====================================================================
-st.subheader("### Resumen Consolidado del Análisis del Dataset de Scopus para Dashboards")
 st.markdown("""
-Este documento presenta un resumen de los análisis realizados sobre tu dataset de Scopus, centrándose en la identificación de modelos de IA, la distribución de tipos de documento, editores, idiomas y otros identificadores clave. Esta información es fundamental para construir un dashboard integral que visualice las tendencias y características de la investigación en tu área de interés.
-""")
-
-st.markdown("#### 1. Análisis de Modelos de Inteligencia Artificial Más Utilizados")
-st.markdown("""
-El análisis de títulos, resúmenes y palabras clave de autores para la mención de modelos de IA revela lo siguiente:
-*   **BERT** emerge como el modelo más prominente, siendo mencionado en **37** artículos, lo que subraya su importancia central en la investigación contenida en tu dataset, especialmente en el contexto de la detección de noticias falsas.
-*   **LSTM** le sigue con **12** menciones, y **CNN** con **10** menciones, indicando que las arquitecturas de redes neuronales profundas siguen siendo fundamentales, a menudo en combinación con BERT o como enfoques independientes.
-*   Otros modelos como **SVM (7)**, **RNN (5)** y **Random Forest (5)** también están presentes, aunque con menor frecuencia, lo que podría sugerir su uso en contextos más específicos o como líneas base de comparación.
-*   Variantes como **RoBERTa (4)** también aparecen, mientras que **DistilBERT (0)** y **XGBoost (0)** tienen una presencia muy limitada o nula en este dataset.
-
-**Conclusión:** La preeminencia de BERT destaca su influencia y la tendencia actual en el procesamiento del lenguaje natural para la detección de noticias falsas, a menudo en sinergia con arquitecturas de aprendizaje profundo clásicas.
-""")
-
-st.markdown("#### 2. Distribución de Publicaciones por Tipo de Documento")
-st.markdown("""
-La mayoría de las publicaciones en tu dataset se concentran en formatos académicos clave, mostrando una clara preferencia por la difusión en foros peer-reviewed:
-*   **Conference paper:** Con **20** publicaciones, es el tipo de documento más frecuente, lo cual es indicativo de campos de rápida evolución donde las conferencias son vitales para la difusión temprana de resultados.
-*   **Article:** Con **15** publicaciones, los artículos de revista representan el segundo formato más común, asegurando una revisión más exhaustiva y una consolidación de la investigación.
-*   **Book chapter:** Con **2** publicaciones, los capítulos de libro tienen una representación menor, lo que puede indicar una síntesis o compilación de conocimientos en áreas específicas.
-
-**Conclusión:** El dataset está fuertemente inclinado hacia las publicaciones de conferencias y artículos de revistas, reflejando las vías principales de difusión de la investigación en este dominio. La escasa presencia de otros tipos de documentos resalta el enfoque en la literatura primaria de investigación.
-""")
-
-st.markdown("#### 3. Top 10 Editores por Número de Publicaciones")
-st.markdown("""
-Los editores más prolíficos en tu dataset, aquellos que lideran la publicación de investigaciones en la detección de noticias falsas y modelos de IA, son:
-*   **Institute of Electrical and Electronics Engineers (IEEE):** Con **14** publicaciones, es el editor más dominante, un actor fundamental en el campo de la ingeniería y la computación.
-*   **Springer Science and Business Media Deutschland GmbH:** Con **6** publicaciones, destaca como un editor importante en la literatura científica y técnica.
-*   **Springer:** Con **4** publicaciones, esta editorial complementa la presencia de su grupo en la difusión de conocimiento.
-*   **World Scientific Publishing Co.:** Con **2** publicaciones, contribuye a la difusión de la investigación especializada.
-*   **ACM (Association for Computing Machinery):** Con **2** publicaciones, es una entidad clave en el ámbito de la informática y las ciencias de la computación.
-*   **Inderscience Publishers:** Con **1** publicación, aporta a la diversidad de las plataformas de difusión.
-*   **CEUR-WS:** Con **1** publicación, es relevante para la difusión de trabajos de conferencias.
-*   **Incoma Ltd:** Con **1** publicación, forma parte del ecosistema de publicaciones.
-*   **Elsevier Ltd:** Con **1** publicación, aunque con menor presencia en este top 10 específico, es una de las mayores editoriales científicas.
-*   **IOS Press:** Con **1** publicación, también contribuye a la literatura en el área.
-
-**Conclusión:** La lista de los Top 10 Editores muestra una concentración de publicaciones en instituciones académicas y editoriales de prestigio como IEEE y Springer, lo que subraya la calidad y el alcance de la investigación en el dataset. Su influencia es crucial para la diseminación de avances en IA y detección de noticias falsas.
-""")
-
-st.markdown("#### 4. Distribución de Publicaciones por Idioma")
-st.markdown("""
-El idioma predominante en las publicaciones es:
-*   **English:** La vasta mayoría de los artículos están publicados en inglés (**37** publicaciones), lo cual es un estándar global en la investigación científica y tecnológica.
-
-**Conclusión:** El inglés es la lingua franca de la investigación en tu dataset, lo cual es un patrón consistente con la difusión del conocimiento científico a nivel global, facilitando el acceso a una audiencia internacional.
-""")
-
-st.markdown("#### 5. Análisis de 'PubMed ID'")
-st.markdown("""
-La columna 'PubMed ID' identifica artículos indexados en la base de datos biomédica PubMed. En este dataset, se encontraron **0** PubMed IDs únicos. Esto sugiere que los artículos en tu colección no están principalmente relacionados con el ámbito biomédico o de la salud, o que no están indexados en esta base de datos específica.
-""")
-
-st.markdown("#### 6. Análisis de 'Correspondence Address'")
-st.markdown("""
-La columna 'Correspondence Address' proporciona la dirección de contacto principal para los autores. Se encontraron **35** Direcciones de Correspondencia únicas en el dataset. Estas direcciones pueden indicar la afiliación institucional primaria o la ubicación geográfica de los autores principales, ofreciendo un potencial para futuros análisis de colaboración geográfica, aunque no se ha realizado un análisis detallado de estas direcciones en este resumen.
-
----
-Esta información es esencial para crear un dashboard que visualice las tendencias, los actores clave y las características demográficas de la investigación en tu campo, permitiendo una comprensión más profunda y contextualizada de tu dataset.
-""")
+<div class="comentario-caja">
+<b>Breve Explicación:</b> La desinformación ligada a la pandemia de COVID-19 e infodemia lidera los entornos temáticos de evaluación con 14 artículos científicos. El inglés se ratifica como la lingua franca absoluta con 37 publicaciones, mientras que el hallazgo de 0 PubMed IDs confirma que los alcances de la investigación están orientados a las ciencias de la computación e ingeniería, ajenos al sector clínico directo.
+</div>
+""", unsafe_allow_html=True)
 
 st.markdown("---")
 
 # =====================================================================
-# 8. VISUALIZACIONES DINÁMICAS ORIGINALES
+# 9. VISUALIZACIONES DINÁMICAS ORIGINALES DEL REPOSITORIO
 # =====================================================================
+st.subheader("📈 Métricas Estructuradas del Repositorio")
 col1, col2 = st.columns(2)
 
 with col1:
@@ -250,7 +270,7 @@ with col2:
         st.warning("La columna 'Authors' o 'Cited by' no está disponible.")
 
 # =====================================================================
-# 9. NUBE DE PALABRAS EN ABSTRACTS
+# 10. NUBE DE PALABRAS EN ABSTRACTS
 # =====================================================================
 st.markdown("---")
 st.subheader("☁️ Análisis Semántico de Palabras en Abstracts")
@@ -279,7 +299,7 @@ else:
     st.info("Agrega la columna 'Abstract' en tu archivo CSV para procesar el análisis lingüístico avanzado requerido.")
 
 # =====================================================================
-# 10. SECCIÓN DE IMÁGENES DE COLAB + COMENTARIOS SOLICITADOS (CUADRÍCULA COMPLETA)
+# 11. SECCIÓN DE IMÁGENES DE COLAB + COMENTARIOS SOLICITADOS (CUADRÍCULA COMPLETA)
 # =====================================================================
 st.markdown("---")
 st.subheader("🖼️ Análisis Exploratorio Avanzado (Resultados de Google Colab)")
@@ -310,7 +330,7 @@ with col_img4:
     st.markdown(f'<div class="comentario-caja">{comentario_grafico_4}</div>', unsafe_allow_html=True)
 
 # =====================================================================
-# 11. VISUALIZACIÓN DE LA TABLA DE DATOS
+# 12. VISUALIZACIÓN DE LA TABLA DE DATOS
 # =====================================================================
 st.markdown("---")
 with st.expander("📂 Desplegar Registro de Literatura Científica (Muestra de Scopus)"):
@@ -320,7 +340,7 @@ with st.expander("📂 Desplegar Registro de Literatura Científica (Muestra de 
     )
 
 # =====================================================================
-# 12. ASIGNACIÓN DE LICENCIA OBLIGATORIA
+# 13. ASIGNACIÓN DE LICENCIA OBLIGATORIA
 # =====================================================================
 st.markdown("---")
 st.markdown("""
