@@ -1,6 +1,6 @@
 # =============================================================
 # Dashboard de Análisis Bibliométrico - Scopus
-# Tema: Detección de Fake News con Machine Learning
+# Tema: Mantenimiento predictivo y detección de fallas con IA
 # Curso: Fundamentos de Machine Learning
 # =============================================================
 
@@ -22,29 +22,26 @@ st.set_page_config(
 )
 
 URL_GITHUB = "https://raw.githubusercontent.com/chancafekate-cloud/PA3_ML_G2_Dashboard/main/PA3_ML_scopus_limpio.csv"
+
 # ----------------- Estilos personalizados (CSS) -----------------
 
 st.markdown("""
 <style>
-    /* Fondo principal de la aplicación en blanco limpio */
     .stApp {
-        background-color: #ffffff;
+        background: linear-gradient(160deg, #0d1b2a 0%, #1b263b 100%);
     }
 
-    /* Tarjeta de la pregunta de investigación con contraste suave */
     .tarjeta-pregunta {
-        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
-        border: 1px solid #cbd5e1;
-        border-left: 5px solid #0284c7;
+        background: linear-gradient(135deg, rgba(30,58,95,0.6), rgba(27,38,59,0.6));
+        border: 1px solid #2e6da4;
+        border-left: 5px solid #ff9505;
         border-radius: 14px;
         padding: 22px 28px;
         margin: 10px 0 18px 0;
-        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     }
 
-    /* Etiquetas internas con colores vivos para impactar */
     .label-pregunta {
-        color: #0284c7;
+        color: #ff9505;
         font-size: 13px;
         font-weight: 700;
         letter-spacing: 2px;
@@ -53,81 +50,65 @@ st.markdown("""
     }
 
     .texto-pregunta {
-        color: #1e293b;
+        color: #f1f5f9;
         font-size: 20px;
-        font-weight: 600;
+        font-weight: 500;
         text-align: center;
         line-height: 1.5;
     }
 
-    /* Chips/Etiquetas de las Keywords */
     .chip {
         display: inline-block;
-        background: #e0f2fe;
-        color: #0369a1;
-        border: 1px solid #bae6fd;
+        background: rgba(46,109,164,0.25);
+        color: #dceaf7;
+        border: 1px solid #4d8cc7;
         border-radius: 20px;
         padding: 6px 16px;
         margin: 4px 6px 4px 0;
-        font-family: Arial, sans-serif;
+        font-family: monospace;
         font-size: 14px;
         font-weight: 600;
     }
 
-    /* Control de tipografías principales (Títulos oscuros para leer bien) */
     h1, h2, h3 {
-        color: #0f172a !important;
-        font-weight: 700 !important;
+        color: #f1f5f9 !important;
     }
 
     p, label, div {
-        color: #334155;
+        color: #e0e1dd;
     }
 
-    /* Métricas nativas de Streamlit estilizadas en modo claro */
     [data-testid="stMetric"] {
-        background: #f8fafc;
-        border: 1px solid #e2e8f0;
+        background: rgba(46,109,164,0.15);
+        border: 1px solid #2e6da4;
         border-radius: 12px;
         padding: 16px;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
     }
 
     [data-testid="stMetricValue"] {
-        color: #0284c7 !important;
-        font-weight: 800 !important;
+        color: #ff9505 !important;
     }
 
     [data-testid="stMetricLabel"] {
-        color: #64748b !important;
+        color: #dceaf7 !important;
         font-weight: 600;
     }
 
-    /* Barra lateral con un tono gris claro limpio para separar ambientes */
     [data-testid="stSidebar"] {
-        background: #f1f5f9;
-        border-right: 1px solid #e2e8f0;
-    }
-    
-    [data-testid="stSidebar"] h2, [data-testid="stSidebar"] label {
-        color: #0f172a !important;
+        background: #0a1420;
+        border-right: 1px solid #2e6da4;
     }
 
     .stCaption {
-        color: #64748b !important;
+        color: #d6e6f2 !important;
         font-size: 14px !important;
     }
 
-    /* Expanders estilizados */
     [data-testid="stExpander"] {
-        background: #ffffff;
-        border: 1px solid #e2e8f0;
+        background: rgba(46,109,164,0.10);
+        border: 1px solid #2e6da4;
         border-radius: 12px;
-        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
     }
-
-    /* Cajas blancas de indicadores clave heredadas */
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -367,10 +348,10 @@ pais_top = df_paises.iloc[0]["País"] if len(df_paises) > 0 else "—"
 PLANTILLA = dict(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(color="#1e293b") # <--- Cambiado a gris oscuro 
+    font=dict(color="#f1f5f9")
 )
 
-# ----------------- Indicadores clave -----------------
+# ----------------- Resumen -----------------
 
 st.markdown("---")
 st.markdown("## 🚀 Indicadores clave del dataset")
@@ -383,8 +364,8 @@ ESTILO_TARJETA = """
 <div style='background: #ffffff; border-top: 4px solid #1ca3dd;
 border-radius: 10px; padding: 22px 16px; text-align: center;
 box-shadow: 0 2px 8px rgba(0,0,0,0.35);'>
-<div style='font-size: 30px; font-weight: 900; color: #000000 !important;'>{valor}</div>
-<div style='font-size: 14px; color: #334155 !important; margin-top: 6px; font-weight: 600;'>{etiqueta}</div>
+<span style='display:block; font-size: 30px; font-weight: 900; color: #0f172a; -webkit-text-fill-color: #0f172a;'>{valor}</span>
+<span style='display:block; font-size: 14px; color: #334155; -webkit-text-fill-color: #334155; margin-top: 6px; font-weight: 600;'>{etiqueta}</span>
 </div>
 """
 
@@ -659,20 +640,19 @@ else:
 
     st.plotly_chart(fig_mapa, use_container_width=True)
 
-    # ----------------- Gráfico 7: Barras de artículos por país -----------------
+    # ----------------- Gráfico 7: Barras de publicaciones por país -----------------
 
-    st.markdown("### 📊 Top 10 países con mayor producción científica")
+    st.markdown("### 📊 Cantidad de publicaciones por país")
 
     st.caption(
-        "Cantidad de artículos por país, según las afiliaciones de los autores."
+        "Ranking de países según el número de publicaciones de la muestra."
     )
 
-    top_paises = df_paises.head(10)
-
     fig_barras_pais = px.bar(
-        top_paises,
-        x="País",
-        y="Publicaciones",
+        df_paises.sort_values("Publicaciones", ascending=True),
+        x="Publicaciones",
+        y="País",
+        orientation="h",
         text="Publicaciones",
         color="Publicaciones",
         color_continuous_scale=[
@@ -691,8 +671,8 @@ else:
         **PLANTILLA,
         showlegend=False,
         coloraxis_showscale=False,
-        xaxis_title="País",
-        yaxis_title="Número de publicaciones"
+        xaxis_title="Publicaciones",
+        yaxis_title=""
     )
 
     st.plotly_chart(fig_barras_pais, use_container_width=True)
