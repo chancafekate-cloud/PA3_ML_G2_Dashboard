@@ -22,26 +22,29 @@ st.set_page_config(
 )
 
 URL_GITHUB = "https://raw.githubusercontent.com/chancafekate-cloud/PA3_ML_G2_Dashboard/main/PA3_ML_scopus_limpio.csv"
-
 # ----------------- Estilos personalizados (CSS) -----------------
 
 st.markdown("""
 <style>
+    /* Fondo principal de la aplicación en blanco limpio */
     .stApp {
-        background: linear-gradient(160deg, #0d1b2a 0%, #1b263b 100%);
+        background-color: #ffffff;
     }
 
+    /* Tarjeta de la pregunta de investigación con contraste suave */
     .tarjeta-pregunta {
-        background: linear-gradient(135deg, rgba(30,58,95,0.6), rgba(27,38,59,0.6));
-        border: 1px solid #2e6da4;
-        border-left: 5px solid #ff9505;
+        background: linear-gradient(135deg, #f8fafc, #f1f5f9);
+        border: 1px solid #cbd5e1;
+        border-left: 5px solid #0284c7;
         border-radius: 14px;
         padding: 22px 28px;
         margin: 10px 0 18px 0;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     }
 
+    /* Etiquetas internas con colores vivos para impactar */
     .label-pregunta {
-        color: #ff9505;
+        color: #0284c7;
         font-size: 13px;
         font-weight: 700;
         letter-spacing: 2px;
@@ -50,70 +53,80 @@ st.markdown("""
     }
 
     .texto-pregunta {
-        color: #f1f5f9;
+        color: #1e293b;
         font-size: 20px;
-        font-weight: 500;
+        font-weight: 600;
         text-align: center;
         line-height: 1.5;
     }
 
+    /* Chips/Etiquetas de las Keywords */
     .chip {
         display: inline-block;
-        background: rgba(46,109,164,0.25);
-        color: #dceaf7;
-        border: 1px solid #4d8cc7;
+        background: #e0f2fe;
+        color: #0369a1;
+        border: 1px solid #bae6fd;
         border-radius: 20px;
         padding: 6px 16px;
         margin: 4px 6px 4px 0;
-        font-family: monospace;
+        font-family: Arial, sans-serif;
         font-size: 14px;
         font-weight: 600;
     }
 
+    /* Control de tipografías principales (Títulos oscuros para leer bien) */
     h1, h2, h3 {
-        color: #f1f5f9 !important;
-    }
-
-    /* 👇 excepción: los títulos dentro de tarjetas blancas van en oscuro */
-    .metric-box h3 {
         color: #0f172a !important;
+        font-weight: 700 !important;
     }
 
     p, label, div {
-        color: #e0e1dd;
+        color: #334155;
     }
 
+    /* Métricas nativas de Streamlit estilizadas en modo claro */
     [data-testid="stMetric"] {
-        background: rgba(46,109,164,0.15);
-        border: 1px solid #2e6da4;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
         border-radius: 12px;
         padding: 16px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
     }
 
     [data-testid="stMetricValue"] {
-        color: #ff9505 !important;
+        color: #0284c7 !important;
+        font-weight: 800 !important;
     }
 
     [data-testid="stMetricLabel"] {
-        color: #dceaf7 !important;
+        color: #64748b !important;
         font-weight: 600;
     }
 
+    /* Barra lateral con un tono gris claro limpio para separar ambientes */
     [data-testid="stSidebar"] {
-        background: #0a1420;
-        border-right: 1px solid #2e6da4;
+        background: #f1f5f9;
+        border-right: 1px solid #e2e8f0;
+    }
+    
+    [data-testid="stSidebar"] h2, [data-testid="stSidebar"] label {
+        color: #0f172a !important;
     }
 
     .stCaption {
-        color: #d6e6f2 !important;
+        color: #64748b !important;
         font-size: 14px !important;
     }
 
+    /* Expanders estilizados */
     [data-testid="stExpander"] {
-        background: rgba(46,109,164,0.10);
-        border: 1px solid #2e6da4;
+        background: #ffffff;
+        border: 1px solid #e2e8f0;
         border-radius: 12px;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
     }
+
+    /* Cajas blancas de indicadores clave heredadas */
     .metric-box h3,
     .metric-box div,
     .metric-box span {
@@ -359,7 +372,7 @@ pais_top = df_paises.iloc[0]["País"] if len(df_paises) > 0 else "—"
 PLANTILLA = dict(
     paper_bgcolor="rgba(0,0,0,0)",
     plot_bgcolor="rgba(0,0,0,0)",
-    font=dict(color="#f1f5f9")
+    font=dict(color="#1e293b") # <--- Cambiado a gris oscuro 
 )
 
 # ----------------- Indicadores clave -----------------
