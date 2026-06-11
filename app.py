@@ -127,12 +127,7 @@ st.markdown("""
     }
 
     /* Cajas blancas de indicadores clave heredadas */
-    .metric-box h3,
-    .metric-box div,
-    .metric-box span {
-        color: #0f172a !important;
-        font-weight: 800;
-    }
+
 </style>
 """, unsafe_allow_html=True)
 
