@@ -21,7 +21,7 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-URL_GITHUB = "https://raw.githubusercontent.com/mmarquez88/dashboard_scopus_pa3_Grupo2/main/scopus.csv"
+URL_GITHUB = "https://raw.githubusercontent.com/chancafekate-cloud/PA3_ML_G2_Dashboard/main/PA3_ML_scopus_limpio.csv"
 
 # ----------------- Estilos personalizados (CSS) -----------------
 
