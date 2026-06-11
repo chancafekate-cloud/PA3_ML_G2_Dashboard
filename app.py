@@ -114,6 +114,12 @@ st.markdown("""
         border: 1px solid #2e6da4;
         border-radius: 12px;
     }
+    .metric-box h3,
+    .metric-box div,
+    .metric-box span {
+        color: #0f172a !important;
+        font-weight: 800;
+    }
 </style>
 """, unsafe_allow_html=True)
 
