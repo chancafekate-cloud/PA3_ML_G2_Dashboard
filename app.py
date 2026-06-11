@@ -285,7 +285,7 @@ border-radius: 12px; padding: 14px 16px; font-size: 13px; color: #dceaf7;'>
 <b>📰 Tema:</b> Detección de fake news con Machine Learning<br><br>
 <b>📚 Curso:</b> Fundamentos de Machine Learning<br><br>
 <b>🗄️ Fuente:</b> Scopus (Elsevier)<br><br>
-<b>🏫 Institución:</b> ISIL
+<b>🏫 Institución:</b> ISIL<br><br>
 <b>👥 Integrantes:</b><br>
 - Marcelo Márquez<br>
 - Graciela Alzamora<br>
