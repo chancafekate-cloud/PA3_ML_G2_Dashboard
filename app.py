@@ -286,6 +286,11 @@ border-radius: 12px; padding: 14px 16px; font-size: 13px; color: #dceaf7;'>
 <b>📚 Curso:</b> Fundamentos de Machine Learning<br><br>
 <b>🗄️ Fuente:</b> Scopus (Elsevier)<br><br>
 <b>🏫 Institución:</b> ISIL
+<b>👥 Integrantes:</b><br>
+- Marcelo Márquez<br>
+- Graciela Alzamora<br>
+- Liz Chancafe<br>
+- Sheila Retamozo
 </div>
 """, unsafe_allow_html=True)
 
