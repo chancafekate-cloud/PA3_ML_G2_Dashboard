@@ -497,20 +497,25 @@ with st.expander("📂 Desplegar registros de literatura científica"):
 # =====================================================================
 # 12. LICENCIA
 # =====================================================================
+
 st.markdown("---")
 
-st.markdown("""
+st.markdown(
+    """
     <div style="text-align: center; margin-top: 20px; padding: 10px; color: #475569;">
-        <p>Este aplicativo interactivo y su código fuente están distribuidos bajo los términos de la licencia:</p>
+        <p>
+            Este aplicativo interactivo y su código fuente están distribuidos bajo los términos de la licencia:
+        </p>
 
         <span style="font-size: 16px; font-weight: bold; color: #0f172a;">
-            <b>Apache License, Version 2.0 (Apache-2.0)</b>
+            Apache License, Version 2.0 (Apache-2.0)
         </span>
 
-        <br />
+        <br><br>
 
-        <small style="display: block; margin-top: 5px; color: #64748b;">
-        Esta licencia permite la utilización, modificación y distribución del software con fines académicos y comerciales, respetando la atribución correspondiente.
+        <small style="color: #64748b;">
+            Esta licencia permite la utilización, modificación y distribución del software con fines académicos y comerciales,
+            respetando la atribución correspondiente.
         </small>
     </div>
     """,
